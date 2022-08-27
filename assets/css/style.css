@@ -1,10 +1,82 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+
 body {
+
+    
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.esconder {
+
+    display: none;
+
+}
+
+.login {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+
+}
+
+.logodaEntrada {
+
+    margin-top: 72px;
+    margin-bottom: 94px;
+
+}
+
+.login > input {
+
+    width: 261px;
+    height: 54px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 18px;
+    background: #FFFFFF;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+
+}
+
+.login > input::placeholder {
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #AEAEAE;
+
+
+}
+
+.login > button {
+
+    width: 109px;
+    height: 45px;
+    background: #E7E7E7;
+    border-radius: 9px;
+    border: none;
+
+}
+
+.carregando {
+
+    width: 130px;
+
+}
+
+.chat {
 
     max-width: 375px;
     background: #E5E5E5;
-    font-family: 'Roboto', sans-serif;
 
 }
 
@@ -18,7 +90,6 @@ body {
     flex-wrap: wrap;
     background: #FFFFFF;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-    
     position: fixed;
     top: 0;
     left: 0;
@@ -38,6 +109,7 @@ body {
 
 }
 
+
 .campo-de-mensagem {
     
     width: 100%;
@@ -47,6 +119,24 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+
+}
+
+.mensagem-do-sistema {
+
+    background-color: #DCDCDC;
+
+}
+
+.mensagem-do-usuario {
+
+    background-color: #FFFFFF;
+
+}
+
+.mensagem-privada {
+
+    background-color: #FFDEDE;
 
 }
 
@@ -81,6 +171,7 @@ body {
 
 }
 
+
 .digitar-mensagem {
 
     width: 100%;
@@ -114,20 +205,4 @@ body {
 
 }
 
-.mensagem-do-sistema {
 
-    background-color: #DCDCDC;
-
-}
-
-.mensagem-do-usuario {
-
-    background-color: #FFFFFF;
-
-}
-
-.mensagem-privada {
-
-    background-color: #FFDEDE;
-
-}

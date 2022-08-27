@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batepapo UOL</title>
 
-    <link rel="stylesheet" href="assets\css\reset.css" />
-    <link rel="stylesheet" href="assets\css\style.css" />
-</head>
-<body>
-    
-    <div class="topo">
-        <img src="./assets/image/logo 1.png">
-        <ion-icon name="people"></ion-icon>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Batepapo UOL</title>
 
-    <ul class="campo-de-mensagem"></ul>
+        <link rel="stylesheet" href="assets\css\reset.css" />
+        <link rel="stylesheet" href="assets\css\style.css" />
+    </head>
 
-    <div class="digitar-mensagem">
-        <input type="text" class="mensagem" placeholder="Escreva aqui..." onfocus="this.value='';">
-        <ion-icon name="paper-plane-outline" onclick="novaMensagem()"></ion-icon>
-    </div>
+    <body>
 
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="assets\javascript\script.js"></script>
+        <div class="login ">
 
-</body>
+            <img class="logodaEntrada" src="./assets/image/logo 2.png">
+            <input type="text" class="mensagem" placeholder="Digite seu nome">
+            <button type="button" class="" onclick="pegarNome()">Entrar</button>
+            <img class="carregando esconder" src="./assets/image/carregando.gif">
+            <span class="esconder">Entrando...</span>
+
+        </div>
+
+
+        <div class="chat esconder">
+            <div class="topo">
+                <img src="./assets/image/logo 1.png">
+                <ion-icon name="people"></ion-icon>
+            </div>
+
+            <ul class="campo-de-mensagem"></ul>
+
+            <div class="digitar-mensagem">
+                <input type="text" class="mensagem" placeholder="Escreva aqui...">
+                <ion-icon name="paper-plane-outline" onclick="novaMensagem()"></ion-icon>
+            </div>
+
+        </div>
+
+
+
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="assets\javascript\script.js"></script>
+
+
+    </body>
+
 </html>
