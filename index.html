@@ -13,7 +13,7 @@
 
     <body>
 
-        <div class="login ">
+        <div class="login">
 
             <img class="logodaEntrada" src="./assets/image/logo 2.png">
             <input type="text" class="mensagem" placeholder="Digite seu nome">
@@ -24,10 +24,10 @@
         </div>
 
 
-        <div class="chat esconder">
+        <div class="chat esconder"><!--esconder-->
             <div class="topo">
                 <img src="./assets/image/logo 1.png">
-                <ion-icon name="people"></ion-icon>
+                <ion-icon onclick="abrirSidebar()" name="people"></ion-icon>
             </div>
 
             <ul class="campo-de-mensagem"></ul>
@@ -40,6 +40,50 @@
         </div>
 
 
+        <div class="transparencia esconder" onclick="fecharSidebar()"></div>
+
+        <div class="side-bar esconder">
+
+            <span class="descricaoSidebar">Escolha um contato para enviar mensagem:</span>
+
+            <ul class="listaDeOpcoes">
+                <li>
+                    <ion-icon name="people"></ion-icon>
+                    <div>Todos</div> 
+                    <ion-icon  class="check" name="checkmark"></ion-icon>
+                </li>
+
+                <!-- <li>
+                    <ion-icon name="person-circle"></ion-icon>
+                    <div>João</div>
+                </li>
+
+                <li>
+                    <ion-icon name="person-circle"></ion-icon>
+                    <div>Maria</div>
+                </li> -->
+            
+
+            </ul>
+
+            <span class="descricaoSidebar">Escolha a visibilidade:</span>
+
+            <ul class="listaDeOpcoes">
+
+                <li data-identifier="visibility">
+                    <ion-icon name="lock-open"></ion-icon>
+                    <div>Público</div>
+                    <ion-icon  class="check" name="checkmark"></ion-icon>
+                </li>
+
+                <li data-identifier="visibility">
+                    <ion-icon name="lock-closed"></ion-icon>
+                    <div>Reservadamente</div>
+                </li>
+
+            </ul>
+
+        </div>
 
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

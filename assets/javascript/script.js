@@ -1,11 +1,16 @@
 //Variaveis Globais
 let todasAsMensagens = [];
-let nome = '';
-let ativar = 0;
+let todosOsOnlines;
+let nome;
+let destinatario = "Todos";
+let tipoDeMensagem = "message";
+let usuarioSelecionado;
 
 
 
 //Funções
+
+//Funcionalidades da Página
 function pegarNome() {
 
     let nomeRecebido = document.querySelector('.login input');
@@ -30,7 +35,38 @@ function carregandoChat() {
     setTimeout(loginComNome, 2000);
 }
 
+function abrirSidebar() {
 
+    const botaoSidebar = document.querySelector(".side-bar");
+    const transparencia = document.querySelector(".transparencia");
+
+    botaoSidebar.classList.remove('esconder');
+    transparencia.classList.remove('esconder');
+
+
+}
+
+function fecharSidebar() {
+
+    const botaoSidebar = document.querySelector(".side-bar");
+    const transparencia = document.querySelector(".transparencia");
+
+    botaoSidebar.classList.add('esconder');
+    transparencia.classList.add('esconder');
+
+}
+
+function envioComEnter(e) {
+
+    if(e.key === "Enter") {
+
+        novaMensagem();
+
+    }
+
+}
+
+//Atualizações do servidor
 function loginComNome() {
 
     const novoUsuario = {
@@ -46,8 +82,6 @@ function loginComNome() {
 function deuCertoNome() {
 
     recebendoAutorização();
-    
-    ativar = 1;
 
     const retirarTelaDeLogin = document.querySelector('.chat');
     retirarTelaDeLogin.classList.remove("esconder")
@@ -70,19 +104,47 @@ function recebendoAutorização() {
 
 }
 
-function deuErroAutorizacao(erro) {
+function deuErroAutorizacao() {
     
     alert("Não consegui contato com o Servidor");
     window.location.reload();
 
 }
 
+function tirarMensagensPrivadas(mensagem) {
+
+    if (mensagem.type === "status") {
+
+        return true;
+
+    } else if (mensagem.type === "message") {
+
+        return true;
+
+    } else if (mensagem.type === "private_message") {
+
+        if (mensagem.from === nome || mensagem.to === nome) {
+
+            return true;
+
+        } else {
+            
+            return false;
+
+        }
+
+    }
+
+}
+
 function carregarMensagem(promessa) {
-    let todasAsMensagens = promessa.data;
+    let mensagensParaFiltrar = promessa.data;
 
     const mensagens = document.querySelector('.campo-de-mensagem')
 
     mensagens.innerHTML = '';
+
+    let todasAsMensagens = mensagensParaFiltrar.filter(tirarMensagensPrivadas);
 
     for ( let i = 0; i < todasAsMensagens.length; i++ ) {
         
@@ -103,7 +165,7 @@ function carregarMensagem(promessa) {
                     <time class="horario">(${todasAsMensagens[i].time})</time>
                     <span class="usuario">${todasAsMensagens[i].from}</span>
                     <span class="meio-da-frase"> para </span>
-                    <span class="usuario"> ${todasAsMensagens[i].to}</span>
+                    <span class="usuario"> ${todasAsMensagens[i].to}:</span>
                     <span class="mensagem">${todasAsMensagens[i].text}</sp>
                 </li>
             `
@@ -115,7 +177,7 @@ function carregarMensagem(promessa) {
                     <time class="horario">(${todasAsMensagens[i].time})</time>
                     <span class="usuario">${todasAsMensagens[i].from}</span>
                     <span class="meio-da-frase"> reservadamente para </span>
-                    <span class="usuario"> ${todasAsMensagens[i].to}</span>
+                    <span class="usuario"> ${todasAsMensagens[i].to}:</span>
                     <span class="mensagem">${todasAsMensagens[i].text}</sp>
                 </li>
             `
@@ -128,6 +190,44 @@ function carregarMensagem(promessa) {
 }
 
 
+function atualizarPessoaOnline() {
+
+    const online = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    online.then(carregarOnline);
+    online.catch(deuErroAReconexao);
+
+}
+
+function carregarOnline(resposta) {
+    console.log(resposta)
+    todosOsOnlines = resposta.data;
+
+    const onlines = document.querySelector('.side-bar .listaDeOpcoes');
+
+    onlines.innerHTML = `
+        <li data-identifier="participant">
+            <ion-icon name="people"></ion-icon>
+            <div>Todos</div> 
+            <ion-icon  class="check" name="checkmark"></ion-icon>
+        </li>
+    `;
+
+    for ( let i = 0; i < todosOsOnlines.length; i++ ) {
+        
+        onlines.innerHTML += `
+            <li data-identifier="participant" onclick="selecionarParticiapnte(this)">
+                <ion-icon name="person-circle"></ion-icon>
+                <div>${todosOsOnlines[i].name}</div> 
+                <ion-icon  class="check esconder" name="checkmark"></ion-icon>
+            </li>
+        `;
+
+    }
+
+}
+
+
+
 function novaMensagem() {
 
     const mensagem = document.querySelector('.digitar-mensagem .mensagem');
@@ -135,9 +235,9 @@ function novaMensagem() {
     const novaMensagem = {
      
         from: nome,
-        to: "Todos",
+        to: destinatario,
         text: mensagem.value,
-        type: "message"
+        type: tipoDeMensagem
 
     }
 
@@ -165,7 +265,7 @@ function deuErroNaMensagem() {
 function rolarTela() {
     
     const mensagem = document.querySelector('.campo-de-mensagem li:last-child');
-    mensagem.scrollIntoView();
+    mensagem.scrollIntoView({behavior:"smooth"});
 
 }
 
@@ -175,8 +275,9 @@ function manterConexao() {
     const nomestatus = {
         name: nome
     }
+    console.log(nome)
 
-    if (nome !== "") {
+    if (nome !== undefined) {
         const resposta = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', nomestatus);
         resposta.then(deuCertoAReconexao);
         resposta.catch(deuErroAReconexao);
@@ -193,25 +294,19 @@ function deuCertoAReconexao() {
 
 function deuErroAReconexao() {
 
-    alert('Deu erro ao conectar no servidor');
-    window.location.reload();
+    //alert('Deu erro ao conectar no servidor');
+    manterConexao();
+    //window.location.reload();
 
 }
 
 
-function envioComEnter(e) {
 
-    if(e.key === "Enter") {
-
-        novaMensagem();
-
-    }
-
-}
 
 
 // Chamada das funções
 setInterval(recebendoAutorização, 3000);
+setInterval(atualizarPessoaOnline, 10000);
 setInterval(manterConexao, 5000);
 
 
