@@ -66,6 +66,7 @@ function envioComEnter(e) {
 
 }
 
+
 //Atualizações do servidor
 function loginComNome() {
 
@@ -138,6 +139,7 @@ function tirarMensagensPrivadas(mensagem) {
 }
 
 function carregarMensagem(promessa) {
+
     let mensagensParaFiltrar = promessa.data;
 
     const mensagens = document.querySelector('.campo-de-mensagem')
@@ -181,12 +183,12 @@ function carregarMensagem(promessa) {
                     <span class="mensagem">${todasAsMensagens[i].text}</sp>
                 </li>
             `
-
+            
         }
 
-    
     }
     rolarTela();
+
 }
 
 
@@ -199,7 +201,7 @@ function atualizarPessoaOnline() {
 }
 
 function carregarOnline(resposta) {
-    console.log(resposta)
+
     todosOsOnlines = resposta.data;
 
     const onlines = document.querySelector('.side-bar .listaDeOpcoes');
@@ -251,7 +253,6 @@ function novaMensagem() {
 function deuCertoNaMensagem() {
 
     recebendoAutorização();
-    console.log('mandou mensagem');
 
 }
 
@@ -275,7 +276,6 @@ function manterConexao() {
     const nomestatus = {
         name: nome
     }
-    console.log(nome)
 
     if (nome !== undefined) {
         const resposta = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', nomestatus);
@@ -288,19 +288,14 @@ function manterConexao() {
 function deuCertoAReconexao() {
 
     recebendoAutorização();
-    console.log('mandou reconexao');
 
 }
 
 function deuErroAReconexao() {
 
-    //alert('Deu erro ao conectar no servidor');
     manterConexao();
-    //window.location.reload();
 
 }
-
-
 
 
 
